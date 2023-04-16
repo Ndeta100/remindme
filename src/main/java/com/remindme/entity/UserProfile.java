@@ -8,7 +8,7 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@NoArgsConstructor(force = true)
+
 @Entity
 @Table(name = "user_profile")
 public class UserProfile {
@@ -29,4 +29,9 @@ public class UserProfile {
     private String phoneNumber;
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
+
+
+    public UserProfile() {
+
+    }
 }

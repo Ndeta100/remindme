@@ -5,9 +5,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
+
 @Entity
 @Table(name = "text")
 @Data
@@ -33,4 +36,7 @@ public class Text {
             )
     )
     Occasion occasion;
+
+    public Text(LocalDateTime now, String message, String phoneNumber) {
+    }
 }

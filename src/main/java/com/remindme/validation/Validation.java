@@ -8,8 +8,11 @@ import com.remindme.exception.NotFoundException;
 import com.remindme.repository.FriendRepository;
 import com.remindme.repository.UserAccountRepository;
 import com.remindme.repository.UserProfileRepository;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class Validation {
+
 
     public boolean isValidPhone(String phoneNum) {
         if (phoneNum.length() == 10) {
