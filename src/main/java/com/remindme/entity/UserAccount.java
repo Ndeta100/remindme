@@ -1,4 +1,6 @@
 package com.remindme.entity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.remindme.security.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@NoArgsConstructor(force = true)
 @Entity
 @Table(name = "user_account")
 public class UserAccount {
@@ -17,14 +18,27 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonManagedReference
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(name = "id")
+    @MapsId
+    private UserProfile userProfile;
+
     @Column(name = "user_name", nullable = false)
     @NonNull
     private String userName;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password", nullable = false)
     @NonNull
     private String password;
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "created_at",nullable = false)
     private OffsetDateTime createdAt;
     @OneToMany(
@@ -39,6 +53,12 @@ public class UserAccount {
     private boolean isEnabled;
     @Column
     private boolean hasTestedText=false;
+    public UserAccount(UserProfile userProfile){
+        this.userProfile=userProfile;
+    }
 
 
+    public UserAccount() {
+
+    }
 }
