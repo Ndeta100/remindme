@@ -51,4 +51,6 @@ public class Occasion {
     )
     private List<Text>texts=new ArrayList<>();
 
+    public Occasion(String birthday, LocalDate dob) {
+    }
 }
