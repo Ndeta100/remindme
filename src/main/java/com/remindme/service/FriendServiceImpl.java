@@ -5,7 +5,9 @@ import com.remindme.entity.Occasion;
 import com.remindme.entity.UserAccount;
 import com.remindme.exception.BadInputException;
 import com.remindme.exception.NamingConflictException;
+import com.remindme.exception.NotFoundException;
 import com.remindme.repository.FriendRepository;
+import com.remindme.repository.UserAccountRepository;
 import com.remindme.validation.Validation;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 public class FriendServiceImpl implements FriendService{
     FriendRepository friendRepository;
     OccasionService occasionService;
+    UserAccountRepository userAccountRepository;
     private final Validation validation=new Validation();
     @Override
     public void addNewFriend(UserAccount userAccount, Friend friend) {
@@ -101,6 +104,30 @@ public class FriendServiceImpl implements FriendService{
 
     @Override
     public List<Friend> getFriendsByUser(String userName) {
+        UserAccount userAccount=userAccountRepository
+                .findUserAccountByUserName(userName)
+                .orElseThrow(
+                        () ->{
+                            return new NotFoundException(
+                                    "User with id " + userName + " not found"
+                            );
+        }
+                );
+      return  userAccount.getFriends();
+    }
+
+    @Override
+    public List<Friend> getFriendsByUserId(Long userId) {
+        UserAccount userAccount=userAccountRepository
+                .findById(userId)
+                .orElseThrow(
+                        ()->{
+                            return  new NotFoundException(
+                                    "User with id " + userId + "not found"
+                            );
+                        }
+
+                );
         return null;
     }
 }
