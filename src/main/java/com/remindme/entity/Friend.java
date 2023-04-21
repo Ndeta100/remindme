@@ -48,4 +48,29 @@ public class Friend {
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
     )
     private List<Occasion> occasions=new ArrayList<>();
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
+    }
+
+    public void addOccasion(Occasion occasion) {
+        if (!this.occasions.contains(occasion)) {
+            this.occasions.add(occasion);
+            occasion.setFriend(this);
+        }
+    }
+
+    public void removeOccasion(Occasion occasion) {
+        if (this.occasions.contains(occasion)) {
+            this.occasions.remove(occasion);
+            occasion.setFriend(null);
+        }
+    }
+
+    public List<Occasion> getOccasions() {
+        return occasions;
+    }
 }
