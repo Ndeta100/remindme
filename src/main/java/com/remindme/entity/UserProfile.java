@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -33,5 +34,8 @@ public class UserProfile {
 
     public UserProfile() {
 
+    }
+
+    public UserProfile(UUID id, String firstName, String lastName, String phoneNumber, OffsetDateTime now) {
     }
 }
